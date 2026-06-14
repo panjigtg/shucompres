@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8085:8085"
+    volumes:
+      - backend-tmp:/app/tmp
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE: http://localhost:8085
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend-tmp:
